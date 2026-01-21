@@ -29,7 +29,7 @@ try {
 
     # Formiruem soobshchenie
     $emoji = [char]::ConvertFromUtf32(0x2705)
-    $telegramMessage = "$emoji <b>$projectName</b>`n`nРабота выполнена!"
+    $telegramMessage = "$emoji <b>$projectName</b>`n`nJob's done!"
 
     # Otpravlyaem v Telegram napryamuyu
     $apiUrl = "https://api.telegram.org/bot$botToken/sendMessage"
