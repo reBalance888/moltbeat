@@ -1,5 +1,10 @@
 # Skript otpravki uvedomleniy v Telegram
 # Ispolzuetsya dlya uvedomleniy o zavershenii zadach v raznykh proektakh
+
+# Ustanavljivaem UTF-8 kodirovu dlya PowerShell
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+$OutputEncoding = [System.Text.Encoding]::UTF8
+
 param(
     [string]$Project = "Claude",
     [string]$Message = "Zadacha vypolnena!",
