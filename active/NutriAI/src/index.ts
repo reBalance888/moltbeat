@@ -51,7 +51,10 @@ bot.use(session({
 
 // ========== COMMANDS ==========
 
-bot.start((ctx) => startCommand(ctx, db));
+bot.start((ctx) => {
+  console.log('📥 Получена команда /start от пользователя:', ctx.from?.id);
+  return startCommand(ctx, db);
+});
 bot.help((ctx) => helpCommand(ctx));
 bot.command('stats', (ctx) => showStats(ctx, db));
 
@@ -278,6 +281,11 @@ bot.catch((err, ctx) => {
 });
 
 // ========== LAUNCH ==========
+
+// Удалить webhook если есть
+bot.telegram.deleteWebhook().then(() => {
+  console.log('✅ Webhook удален (используем polling)');
+});
 
 bot.launch();
 console.log('✅ Бот запущен!');
