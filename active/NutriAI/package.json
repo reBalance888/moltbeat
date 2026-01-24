@@ -1,7 +1,7 @@
 {
-  "name": "pphavchik-bot",
+  "name": "nutriai-bot",
   "version": "4.0.0",
-  "description": "Telegram бот для правильного питания с AI помощником (Gemini), SMART функциями, фото сканированием, планировщиком меню и графиками",
+  "description": "NutriAI - AI-powered Telegram бот для правильного питания (@NutrivhodvAI_bot). SMART подбор рецептов, Gemini AI помощник, barcode сканер, планировщик меню и графики прогресса",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
