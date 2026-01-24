@@ -1,0 +1,14 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe -ExecutionPolicy Bypass -File D:\\DEV\\AI_Workspace\\active\\PPhavchik\\.claude\\notify-completion.ps1"
+          }
+        ]
+      }
+    ]
+  }
+}
