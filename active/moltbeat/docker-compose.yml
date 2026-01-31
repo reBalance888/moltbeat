@@ -1,0 +1,81 @@
+version: '3.8'
+
+services:
+  # Data Collector Service
+  collector:
+    build:
+      context: ./packages/collector
+      dockerfile: Dockerfile
+    container_name: moltbeat-collector
+    environment:
+      - NODE_ENV=production
+      - MOLTBOOK_API_KEY=${MOLTBOOK_API_KEY}
+      - DATABASE_URL=${DATABASE_URL}
+      - UPSTASH_REDIS_REST_URL=${UPSTASH_REDIS_REST_URL}
+      - UPSTASH_REDIS_REST_TOKEN=${UPSTASH_REDIS_REST_TOKEN}
+      - COLLECTOR_CRON=${COLLECTOR_CRON:-0 */5 * * *}
+      - COLLECTOR_MAX_AGENTS=${COLLECTOR_MAX_AGENTS:-100}
+      - COLLECTOR_MAX_POSTS=${COLLECTOR_MAX_POSTS:-50}
+    restart: unless-stopped
+    networks:
+      - moltbeat-network
+    depends_on:
+      - postgres
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # Telegram Bot
+  telegram-bot:
+    build:
+      context: ./bots/telegram
+      dockerfile: Dockerfile
+    container_name: moltbeat-telegram
+    environment:
+      - NODE_ENV=production
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - TELEGRAM_ADMIN_IDS=${TELEGRAM_ADMIN_IDS}
+      - DATABASE_URL=${DATABASE_URL}
+      - UPSTASH_REDIS_REST_URL=${UPSTASH_REDIS_REST_URL}
+      - UPSTASH_REDIS_REST_TOKEN=${UPSTASH_REDIS_REST_TOKEN}
+    restart: unless-stopped
+    networks:
+      - moltbeat-network
+    depends_on:
+      - postgres
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # PostgreSQL (Local Dev Only - Use Supabase in Production)
+  postgres:
+    image: postgres:16-alpine
+    container_name: moltbeat-postgres
+    environment:
+      - POSTGRES_USER=moltbeat
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-changeme}
+      - POSTGRES_DB=moltbeat
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - moltbeat-network
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  moltbeat-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
+    driver: local
