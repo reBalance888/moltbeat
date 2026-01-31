@@ -1,0 +1,24 @@
+{
+  "name": "@moltbeat/billing",
+  "version": "1.0.0",
+  "description": "Stripe billing and subscription management for MoltBeat",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist node_modules"
+  },
+  "keywords": ["stripe", "billing", "subscription", "payment"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@moltbeat/database": "workspace:*",
+    "stripe": "^17.5.0",
+    "date-fns": "^3.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.0",
+    "typescript": "^5.9.0"
+  }
+}
