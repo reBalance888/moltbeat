@@ -1,0 +1,24 @@
+{
+  "name": "@moltbeat/crypto-intel",
+  "version": "1.0.0",
+  "description": "Cryptocurrency intelligence and trend analysis for MoltBook",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist node_modules"
+  },
+  "keywords": ["crypto", "cryptocurrency", "intelligence", "analysis", "sentiment"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@moltbeat/database": "workspace:*",
+    "@moltbeat/sentiment": "workspace:*",
+    "date-fns": "^3.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.0",
+    "typescript": "^5.9.0"
+  }
+}
