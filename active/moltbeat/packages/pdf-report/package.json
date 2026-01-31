@@ -1,0 +1,28 @@
+{
+  "name": "@moltbeat/pdf-report",
+  "version": "1.0.0",
+  "description": "PDF report generator for MoltBeat analytics with charts and tables",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist node_modules"
+  },
+  "keywords": ["pdf", "report", "charts", "analytics"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@moltbeat/database": "workspace:*",
+    "pdfkit": "^0.15.0",
+    "quickchart-js": "^3.1.3",
+    "date-fns": "^3.3.1",
+    "node-fetch": "^2.7.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.0",
+    "@types/node-fetch": "^2.6.11",
+    "@types/pdfkit": "^0.13.4",
+    "typescript": "^5.9.0"
+  }
+}
