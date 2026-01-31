@@ -1,0 +1,27 @@
+{
+  "name": "@moltbeat/api",
+  "version": "1.0.0",
+  "description": "Public REST API for MoltBeat analytics",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "clean": "rm -rf dist node_modules"
+  },
+  "keywords": ["api", "rest", "hono"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@moltbeat/database": "workspace:*",
+    "@moltbeat/cache": "workspace:*",
+    "hono": "^4.7.9",
+    "@hono/node-server": "^1.14.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.0",
+    "typescript": "^5.9.0",
+    "tsx": "^4.19.2"
+  }
+}
