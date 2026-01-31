@@ -1,0 +1,22 @@
+{
+  "name": "@moltbeat/cache",
+  "version": "1.0.0",
+  "description": "Redis cache with invalidation strategy and tag system",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@upstash/redis": "^1.28.0",
+    "@moltbeat/config": "workspace:*",
+    "@moltbeat/logger": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "@types/node": "^20.11.0"
+  }
+}

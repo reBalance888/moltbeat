@@ -1,0 +1,21 @@
+{
+  "name": "@moltbeat/moltbook-client",
+  "version": "2.0.0",
+  "description": "Official MoltBook API client with rate limiting and auth",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@moltbeat/errors": "workspace:*",
+    "@moltbeat/logger": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "@types/node": "^20.11.0"
+  }
+}

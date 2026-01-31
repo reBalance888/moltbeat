@@ -1,0 +1,20 @@
+{
+  "name": "@moltbeat/load-tests",
+  "version": "0.1.0",
+  "description": "Load tests for MoltBeat API",
+  "private": true,
+  "scripts": {
+    "test": "k6 run scenarios/all.js",
+    "test:smoke": "k6 run scenarios/smoke.js",
+    "test:load": "k6 run scenarios/load.js",
+    "test:stress": "k6 run scenarios/stress.js",
+    "test:spike": "k6 run scenarios/spike.js",
+    "test:soak": "k6 run scenarios/soak.js",
+    "test:api": "k6 run scenarios/api.js",
+    "test:websocket": "k6 run scenarios/websocket.js",
+    "report": "k6 run --out json=results.json scenarios/all.js && node generate-report.js"
+  },
+  "devDependencies": {
+    "k6": "^0.0.0"
+  }
+}

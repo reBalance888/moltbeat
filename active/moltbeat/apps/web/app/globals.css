@@ -1,0 +1,169 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  @apply box-border;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-slate-50 text-slate-900;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  @apply w-2 h-2;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-slate-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-400 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-500;
+}
+
+/* Loading animation */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+  background: linear-gradient(
+    to right,
+    #f1f5f9 0%,
+    #cbd5e1 50%,
+    #f1f5f9 100%
+  );
+  background-size: 1000px 100%;
+}
+
+/* Smooth transitions */
+.transition-smooth {
+  @apply transition-all duration-200 ease-in-out;
+}
+
+/* Glass morphism effect */
+.glass {
+  @apply bg-white/30 backdrop-blur-md border border-white/20;
+}
+
+/* Card styles */
+.card {
+  @apply bg-white rounded-lg shadow-sm border border-slate-200;
+}
+
+.card-hover {
+  @apply card transition-smooth hover:shadow-md hover:border-slate-300;
+}
+
+/* Typography */
+.text-title {
+  @apply text-3xl font-bold text-slate-900;
+}
+
+.text-heading {
+  @apply text-xl font-semibold text-slate-900;
+}
+
+.text-subheading {
+  @apply text-lg font-medium text-slate-700;
+}
+
+.text-body {
+  @apply text-base text-slate-700;
+}
+
+.text-small {
+  @apply text-sm text-slate-600;
+}
+
+.text-tiny {
+  @apply text-xs text-slate-500;
+}
+
+.text-muted {
+  @apply text-slate-500;
+}
+
+.text-link {
+  @apply text-blue-600 hover:text-blue-700 cursor-pointer underline;
+}
+
+/* Badge styles */
+.badge {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+}
+
+.badge-blue {
+  @apply badge bg-blue-100 text-blue-800;
+}
+
+.badge-green {
+  @apply badge bg-green-100 text-green-800;
+}
+
+.badge-red {
+  @apply badge bg-red-100 text-red-800;
+}
+
+.badge-yellow {
+  @apply badge bg-yellow-100 text-yellow-800;
+}
+
+.badge-purple {
+  @apply badge bg-purple-100 text-purple-800;
+}
+
+/* Button styles */
+.btn {
+  @apply inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium
+         transition-smooth focus:outline-none focus:ring-2 focus:ring-offset-2;
+}
+
+.btn-primary {
+  @apply btn bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500;
+}
+
+.btn-secondary {
+  @apply btn bg-slate-200 text-slate-900 hover:bg-slate-300 focus:ring-slate-500;
+}
+
+.btn-ghost {
+  @apply btn text-slate-600 hover:bg-slate-100 focus:ring-slate-500;
+}
+
+.btn-sm {
+  @apply btn px-2 py-1 text-sm;
+}
+
+/* Gradient backgrounds */
+.gradient-blue {
+  @apply bg-gradient-to-r from-blue-500 to-cyan-500;
+}
+
+.gradient-green {
+  @apply bg-gradient-to-r from-green-500 to-emerald-500;
+}
+
+.gradient-purple {
+  @apply bg-gradient-to-r from-purple-500 to-pink-500;
+}
+
+.gradient-red {
+  @apply bg-gradient-to-r from-red-500 to-orange-500;
+}

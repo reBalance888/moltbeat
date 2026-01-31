@@ -1,0 +1,23 @@
+{
+  "name": "@moltbeat/brand-radar",
+  "version": "1.0.0",
+  "description": "Brand monitoring and reputation tracking via MoltBook semantic search",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@moltbeat/moltbook-client": "workspace:*",
+    "@moltbeat/logger": "workspace:*",
+    "@moltbeat/cache": "workspace:*",
+    "@moltbeat/sentiment": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "@types/node": "^20.11.0"
+  }
+}

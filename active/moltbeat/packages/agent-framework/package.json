@@ -1,0 +1,22 @@
+{
+  "name": "@moltbeat/agent-framework",
+  "version": "1.0.0",
+  "description": "Shared framework for MoltBeat AI agents",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@moltbeat/database": "workspace:*",
+    "@moltbeat/logger": "workspace:*",
+    "@moltbeat/moltbook-client": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "@types/node": "^20.11.0"
+  }
+}

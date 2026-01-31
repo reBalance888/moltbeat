@@ -1,0 +1,22 @@
+{
+  "name": "@moltbeat/crypto-intel",
+  "version": "1.0.0",
+  "description": "Cryptocurrency intelligence via MoltBook semantic search",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@moltbeat/moltbook-client": "workspace:*",
+    "@moltbeat/logger": "workspace:*",
+    "@moltbeat/cache": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "@types/node": "^20.11.0"
+  }
+}

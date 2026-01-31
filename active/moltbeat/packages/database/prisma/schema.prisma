@@ -1,0 +1,278 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["strictUndefinedChecks"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ============================================================================
+// Authentication Models (P0-001)
+// ============================================================================
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String // bcrypt hashed
+  name      String
+  role      UserRole @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  apiKeys       ApiKey[]
+  refreshTokens RefreshToken[]
+
+  @@index([email])
+  @@map("users")
+}
+
+enum UserRole {
+  ADMIN
+  USER
+  READONLY
+}
+
+model ApiKey {
+  id          String   @id @default(uuid())
+  userId      String
+  key         String   @unique // hashed
+  name        String
+  permissions String[] // ['read', 'write', 'admin']
+  expiresAt   DateTime?
+  lastUsedAt  DateTime?
+  createdAt   DateTime @default(now())
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([key])
+  @@map("api_keys")
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  userId    String
+  token     String   @unique // hashed
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([token])
+  @@map("refresh_tokens")
+}
+
+// ============================================================================
+// Core Domain Models
+// ============================================================================
+
+model Agent {
+  id               String      @id // Moltbook agent ID
+  name             String
+  personality      String?     @db.Text
+  submolts         String[] // Subscribed submolts
+  status           AgentStatus @default(ACTIVE)
+  postingSchedule  String? // Cron expression
+  lastActive       DateTime?
+  lastPosted       DateTime?
+  totalPosts       Int         @default(0)
+  avgSentiment     Float?
+  avgEngagement    Float?
+  errorCount       Int         @default(0)
+  lastError        String?     @db.Text
+  lastErrorAt      DateTime?
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+
+  // Relations
+  posts   Post[]
+  metrics Metric[]
+  alerts  Alert[]
+
+  // Performance indexes (P0-003)
+  @@index([status, lastActive]) // Active agents query
+  @@index([lastPosted]) // Recently posted agents
+  @@index([createdAt])
+  @@map("agents")
+}
+
+enum AgentStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+  ERROR
+}
+
+model Post {
+  id              String   @id // Moltbook post ID
+  agentId         String
+  content         String   @db.Text
+  submolt         String?
+  parentPostId    String?
+  sentiment       Float? // -1 to 1
+  engagementScore Float?
+  likeCount       Int      @default(0)
+  commentCount    Int      @default(0)
+  shareCount      Int      @default(0)
+  createdAt       DateTime @default(now())
+  syncedAt        DateTime @default(now())
+
+  // Relations
+  agent Agent @relation(fields: [agentId], references: [id], onDelete: Cascade)
+
+  // Performance indexes (P0-003)
+  @@index([agentId, createdAt]) // Posts by agent over time
+  @@index([submolt, createdAt]) // Posts by submolt over time
+  @@index([sentiment]) // Sentiment analysis queries
+  @@index([engagementScore]) // Top engaging posts
+  @@index([createdAt]) // Recent posts
+  @@map("posts")
+}
+
+model Metric {
+  id        String     @id @default(uuid())
+  agentId   String?
+  type      MetricType
+  value     Float
+  metadata  Json? // Additional metric data
+  timestamp DateTime   @default(now())
+
+  // Relations
+  agent Agent? @relation(fields: [agentId], references: [id], onDelete: Cascade)
+
+  // Performance indexes (P0-003)
+  @@index([agentId, type, timestamp]) // Metrics by agent and type over time
+  @@index([type, timestamp]) // Global metrics by type
+  @@index([timestamp]) // Time-series queries
+  @@map("metrics")
+}
+
+enum MetricType {
+  SENTIMENT
+  ENGAGEMENT
+  ACTIVITY
+  ERROR_RATE
+  RESPONSE_TIME
+  API_CALLS
+  CUSTOM
+}
+
+model Alert {
+  id        String        @id @default(uuid())
+  agentId   String?
+  type      AlertType
+  severity  AlertSeverity
+  message   String        @db.Text
+  metadata  Json? // Additional alert context
+  read      Boolean       @default(false)
+  createdAt DateTime      @default(now())
+
+  // Relations
+  agent Agent? @relation(fields: [agentId], references: [id], onDelete: Cascade)
+
+  // Performance indexes (P0-003)
+  @@index([severity, read, createdAt]) // Unread alerts by severity
+  @@index([agentId, createdAt]) // Alerts by agent
+  @@index([type, createdAt]) // Alerts by type
+  @@index([read, createdAt]) // Unread alerts
+  @@map("alerts")
+}
+
+enum AlertType {
+  SENTIMENT_DROP
+  LOW_ENGAGEMENT
+  AGENT_ERROR
+  RATE_LIMIT
+  CUSTOM
+}
+
+enum AlertSeverity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+// ============================================================================
+// Analytics & Tracking
+// ============================================================================
+
+model TrendingTopic {
+  id          String   @id @default(uuid())
+  keyword     String
+  submolt     String?
+  mentionCount Int
+  sentiment   Float?
+  period      DateTime // Aggregation period (hour/day)
+  createdAt   DateTime @default(now())
+
+  @@index([keyword, period])
+  @@index([submolt, period])
+  @@index([mentionCount])
+  @@map("trending_topics")
+}
+
+model AgentRelationship {
+  id            String   @id @default(uuid())
+  sourceAgentId String
+  targetAgentId String
+  interactions  Int      @default(0) // Number of interactions
+  sentiment     Float? // Average sentiment of interactions
+  lastInteraction DateTime?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@unique([sourceAgentId, targetAgentId])
+  @@index([sourceAgentId])
+  @@index([targetAgentId])
+  @@index([interactions])
+  @@map("agent_relationships")
+}
+
+// ============================================================================
+// B2B & Crypto Features (Future)
+// ============================================================================
+
+model BrandMonitoring {
+  id              String   @id @default(uuid())
+  brandName       String
+  keywords        String[] // Keywords to track
+  submolts        String[] // Submolts to monitor
+  mentionCount    Int      @default(0)
+  avgSentiment    Float?
+  notifyOnMention Boolean  @default(false)
+  userId          String // Owner of this monitoring
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([brandName])
+  @@index([userId])
+  @@map("brand_monitoring")
+}
+
+model TokenTracking {
+  id              String   @id @default(uuid())
+  tokenSymbol     String
+  tokenName       String
+  mentionCount    Int      @default(0)
+  sentiment       Float?
+  priceImpact     Float? // Correlation with price changes
+  lastMentionedAt DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@unique([tokenSymbol])
+  @@index([mentionCount])
+  @@index([sentiment])
+  @@map("token_tracking")
+}

@@ -1,0 +1,26 @@
+{
+  "name": "@moltbeat/database",
+  "version": "1.0.0",
+  "description": "Database schema, Prisma client, and repositories",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist",
+    "typecheck": "tsc --noEmit",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:push": "prisma db push",
+    "prisma:studio": "prisma studio"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.8.0",
+    "@moltbeat/errors": "workspace:*"
+  },
+  "devDependencies": {
+    "prisma": "^5.8.0",
+    "typescript": "^5.3.3",
+    "@types/node": "^20.11.0"
+  }
+}
