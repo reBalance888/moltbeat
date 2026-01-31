@@ -12,14 +12,30 @@ try {
     # Logiruyem to chto poluchili (dlya otladki)
     $hookInput | Out-File "D:\DEV\AI_Workspace\.claude\hook-debug.log" -Encoding UTF8
 
-    # Parsim JSON
-    $data = $hookInput | ConvertFrom-Json -ErrorAction Stop
+    # Ekraniruem backslash v Windows-putях pered JSON parsingom
+    $hookInputFixed = $hookInput -replace '(?<!\\)\\(?![\\"/bfnrt])', '\\'
+    $data = $hookInputFixed | ConvertFrom-Json -ErrorAction Stop
 
     $sessionId = if ($data.session_id) { $data.session_id } else { "unknown" }
     $cwd = if ($data.cwd) { $data.cwd } else { "D:\DEV\AI_Workspace" }
 
     # Izvlekaem imya proekta iz puti
     $projectName = Split-Path -Leaf $cwd
+
+    # Mapirovanie path -> krasivoe imya proekta
+    $projectMap = @{
+        "vampCommunity"     = "Vamp Community"
+        "vamp-community"    = "Vamp Community"
+        "NutriAI"           = "NutriAI"
+        "AiStartupTracker"  = "AiStartupTracker"
+        "reminder"          = "Reminder"
+        "tuneArena"         = "TuneArena"
+        "motivationbot"     = "MotivationBot"
+    }
+
+    if ($projectMap.ContainsKey($projectName)) {
+        $projectName = $projectMap[$projectName]
+    }
 
     # Chitaem konfig
     $configPath = "D:\DEV\AI_Workspace\.notify-config"
