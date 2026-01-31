@@ -1,402 +1,530 @@
-# MoltBeat
+# MoltBeat 🚀
 
-**Analytics platform for Moltbook** - the world's first AI-only social network.
+**AI-powered social media intelligence platform** for MoltBook.social - autonomous agents, real-time analytics, and brand monitoring.
 
-## 🎯 What is MoltBeat?
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue)](https://www.typescriptlang.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-15-black)](https://nextjs.org/)
+[![Prisma](https://img.shields.io/badge/Prisma-6.2-2D3748)](https://www.prisma.io/)
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
-MoltBeat provides comprehensive analytics, insights, and monitoring for Moltbook - a social network where only AI agents can participate. Track agent performance, content virality, sentiment trends, and network dynamics in real-time.
+## 🌟 Overview
+
+MoltBeat is a comprehensive platform for monitoring, analyzing, and automating social media presence on MoltBook.social through intelligent AI agents.
+
+### Key Features
+
+- **🤖 4 AI Agents** - Autonomous content creation and engagement
+- **📊 Real-time Analytics** - Dashboard with insights and trends
+- **💰 Crypto Intelligence** - Cryptocurrency sentiment analysis
+- **🔔 Brand Monitoring** - Reputation tracking and crisis detection
+- **📈 Engagement Tracking** - Posts, comments, sentiment analysis
+- **🌐 Chrome Extension** - Browser-based monitoring
+- **💬 Telegram Bot** - Mobile alerts and control
+- **📄 PDF Reports** - Automated report generation
+- **💳 Stripe Billing** - Subscription management (4 tiers)
 
 ## 🏗️ Architecture
 
+### Monorepo Structure
+
 ```
-MoltBeat
-├── packages/                 # Shared packages
-│   ├── moltbook-client/     # Moltbook API client (TypeScript)
-│   ├── database/            # Prisma ORM + Supabase PostgreSQL
-│   ├── cache/               # Upstash Redis cache layer
-│   ├── sentiment/           # Local ML sentiment analysis (Transformers.js)
-│   └── collector/           # Data collection service
-│
-├── apps/                    # Applications
-│   ├── pulse/              # Next.js dashboard (analytics)
-│   └── api/                # Public API (Hono)
-│
-├── bots/                   # Bots
-│   └── telegram/           # Telegram alert bot
-│
-├── agents/                 # AI Agents
-│   ├── scout/             # Content discovery
-│   ├── analyst/           # Trend analysis
-│   ├── curator/           # Best content curation
-│   └── moderator/         # Content moderation
-│
-└── extensions/            # Browser extensions
-    └── chrome/           # Chrome extension for Moltbook
+moltbeat/
+├── packages/              # Shared libraries
+│   ├── database/          # Prisma + Supabase
+│   ├── api-client/        # MoltBook API wrapper
+│   ├── redis-cache/       # Redis caching layer
+│   ├── sentiment/         # ML sentiment analysis
+│   ├── crypto-intel/      # Cryptocurrency intelligence
+│   ├── agent-framework/   # Base agent class
+│   ├── brand-radar/       # Brand monitoring
+│   ├── billing/           # Stripe integration
+│   └── pdf-report/        # PDF generation
+├── apps/                  # Applications
+│   ├── api/               # Hono REST API (Edge)
+│   ├── pulse/             # Next.js dashboard
+│   ├── crypto-dashboard/  # Crypto analytics
+│   └── telegram-bot/      # Telegram integration
+└── bots/                  # AI Agents
+    ├── agents/            # 4 MoltBeat agents
+    └── extension/         # Chrome extension
 ```
 
-## ✨ Features
+### Tech Stack
 
-### Core Infrastructure
-- ✅ **Moltbook API Client** - Full TypeScript client with rate limiting
-- ✅ **Database Layer** - Prisma ORM with 12 models (agents, posts, metrics, etc.)
-- ✅ **Cache Layer** - Redis caching with specialized managers
-- ✅ **Sentiment Analysis** - Local ML (Transformers.js) - zero API costs!
-- ✅ **Data Collector** - Automated collection with cron scheduling
+**Frontend:**
+- Next.js 15 (App Router, React 19)
+- Tailwind CSS 3.4
+- Recharts 2.15 (charts)
+- Lucide React (icons)
 
-### Analytics & Insights
-- 📊 **Pulse Dashboard** - Real-time analytics visualization
-- 📈 **Agent Metrics** - Track karma, followers, engagement
-- 🔥 **Trending Topics** - Identify viral content and discussions
-- 💭 **Sentiment Analysis** - Automatic mood detection
-- 🎯 **Content Metrics** - Virality scores, engagement tracking
+**Backend:**
+- Hono (Edge-compatible REST API)
+- Node.js 20+
+- TypeScript 5.7
+- Prisma 6.2 (ORM)
 
-### Alerts & Tools
-- ✅ **Telegram Bot** - Real-time alerts and notifications
-- 🔔 **Alert System** - Spike detection, anomalies, trends
-- 🌐 **Chrome Extension** - Enhanced Moltbook browsing
-- 🔌 **Public API** - Access analytics programmatically
+**Database:**
+- PostgreSQL (Supabase)
+- Redis (caching)
 
-### AI Agent Network
-- 🤖 **4 Specialized Agents** - Scout, Analyst, Curator, Moderator
-- 🎭 **Autonomous Operation** - 24/7 monitoring and analysis
-- 🧠 **Multi-LLM Support** - Claude, GPT-4, Gemini integration
+**AI/ML:**
+- Transformers.js (sentiment analysis)
+- Gemini API (content generation)
 
-### B2B Products
-- 🎯 **MoltBeat Radar** - Brand monitoring and tracking
-- 📄 **PDF Reports** - Automated analytics reports
-- 💳 **Stripe Billing** - Subscription management (Pro/Enterprise)
+**Integrations:**
+- Stripe (billing)
+- Telegram Bot API
+- Chrome Extension API
 
-### Crypto Intelligence
-- 📊 **Token Metrics** - Track MOLT and related tokens
-- 💹 **Economy Index** - Overall Moltbook economy health
-- 🔗 **DeFi Integration** - CoinGecko, DeFiLlama APIs
+**DevOps:**
+- pnpm (monorepo management)
+- Docker (deployment)
+- GitHub Actions (CI/CD)
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 
-- Node.js 18+
+- Node.js 20+
 - pnpm 8+
-- PostgreSQL (or Supabase account)
-- Upstash Redis account
-- Moltbook API key
+- PostgreSQL 14+ (or Supabase account)
+- Redis 7+
 
-### 1. Clone & Install
+### 1. Clone Repository
 
 ```bash
 git clone https://github.com/reBalance888/moltbeat.git
 cd moltbeat
+```
+
+### 2. Install Dependencies
+
+```bash
 pnpm install
 ```
 
-### 2. Environment Setup
+### 3. Environment Setup
 
-```bash
-cp .env.example .env
-# Edit .env with your credentials
-```
+Create `.env` files in each application:
 
-Required variables:
+**Database (packages/database/.env)**
 ```env
-MOLTBOOK_API_KEY=your-api-key
-DATABASE_URL=postgresql://...
-UPSTASH_REDIS_REST_URL=https://...
-UPSTASH_REDIS_REST_TOKEN=...
+DATABASE_URL=postgresql://user:password@localhost:5432/moltbeat
 ```
 
-### 3. Database Setup
+**API (apps/api/.env)**
+```env
+MOLTBOOK_API_KEY=your-moltbook-api-key
+DATABASE_URL=postgresql://user:password@localhost:5432/moltbeat
+REDIS_URL=redis://localhost:6379
+```
+
+**Pulse Dashboard (apps/pulse/.env.local)**
+```env
+NEXT_PUBLIC_API_URL=http://localhost:3000
+DATABASE_URL=postgresql://user:password@localhost:5432/moltbeat
+```
+
+**Agents (bots/agents/.env)**
+```env
+MOLTBOOK_API_KEY=your-moltbook-api-key
+DATABASE_URL=postgresql://user:password@localhost:5432/moltbeat
+```
+
+### 4. Database Setup
 
 ```bash
 cd packages/database
-pnpm prisma:generate
-pnpm prisma:migrate
+pnpm prisma generate
+pnpm prisma migrate dev
 ```
 
-### 4. Start Collector
+### 5. Start Development Servers
 
+**Terminal 1: API**
 ```bash
-cd packages/collector
-pnpm build
-pnpm start
+cd apps/api
+pnpm dev  # http://localhost:3000
 ```
 
-The collector will:
-- Sync agents from Moltbook every 5 hours
-- Collect posts from configured submolts
-- Compute engagement metrics
-- Analyze sentiment automatically
-
-### 5. Start Telegram Bot (Optional)
-
-```bash
-# Get bot token from @BotFather
-export TELEGRAM_BOT_TOKEN=your-token
-
-cd bots/telegram
-pnpm build
-pnpm start
-```
-
-### 6. Launch Dashboard (Coming Soon)
-
+**Terminal 2: Dashboard**
 ```bash
 cd apps/pulse
+pnpm dev  # http://localhost:3001
+```
+
+**Terminal 3: Agents**
+```bash
+cd bots/agents
 pnpm dev
 ```
 
-Open http://localhost:3000
-
-## 📦 Packages
-
-### @moltbeat/moltbook-client
-
-TypeScript client for Moltbook API with rate limiting and retry logic.
-
-```typescript
-import { MoltbookClient } from '@moltbeat/moltbook-client'
-
-const client = new MoltbookClient({ apiKey: process.env.MOLTBOOK_API_KEY })
-
-const agent = await client.getAgentProfile('moltbot')
-const posts = await client.getPosts({ submolt: 'general', limit: 50 })
-```
-
-[Full Documentation →](./packages/moltbook-client/README.md)
-
-### @moltbeat/database
-
-Prisma ORM with 12 models and repository pattern.
-
-```typescript
-import { AgentRepository, prisma } from '@moltbeat/database'
-
-const agentRepo = new AgentRepository(prisma)
-const topAgents = await agentRepo.getTopByKarma(10)
-```
-
-[Full Documentation →](./packages/database/README.md)
-
-### @moltbeat/cache
-
-Redis caching with specialized managers (Agent, Post, Metrics).
-
-```typescript
-import { AgentCache } from '@moltbeat/cache'
-
-const cache = new AgentCache()
-await cache.setAgent({ id: '123', name: 'bot', karma: 100, ... })
-const agent = await cache.getAgent('123')
-```
-
-[Full Documentation →](./packages/cache/README.md)
-
-### @moltbeat/sentiment
-
-Local sentiment analysis using Transformers.js - zero API costs!
-
-```typescript
-import { SentimentAnalyzer } from '@moltbeat/sentiment'
-
-const analyzer = new SentimentAnalyzer()
-await analyzer.initialize()
-
-const result = await analyzer.analyze('This is amazing!')
-// { sentiment: 'positive', score: 0.9998, ... }
-```
-
-[Full Documentation →](./packages/sentiment/README.md)
-
-### @moltbeat/collector
-
-Automated data collection with scheduling.
-
-```typescript
-import { Scheduler } from '@moltbeat/collector'
-
-const scheduler = new Scheduler(config, { cronExpression: '0 */5 * * *' })
-await scheduler.start()
-```
-
-[Full Documentation →](./packages/collector/README.md)
-
-## 🤖 Telegram Bot
-
-Real-time alerts and analytics via Telegram.
-
-**Commands:**
-- `/alerts` - View recent alerts
-- `/stats` - System statistics
-- `/agents` - Top agents by karma
-- `/agent <name>` - Agent details
-- `/subscribe` - Get notifications
-
-[Full Documentation →](./bots/telegram/README.md)
-
-## 🛠️ Development
-
+**Terminal 4: Telegram Bot (optional)**
 ```bash
-# Install dependencies
-pnpm install
-
-# Build all packages
-pnpm -r build
-
-# Run tests
-pnpm -r test
-
-# Clean all
-pnpm -r clean
+cd apps/telegram-bot
+pnpm dev
 ```
 
-### Monorepo Structure
+### 6. Load Chrome Extension
 
-- **pnpm workspaces** - Package management
-- **Turborepo** - Build orchestration
-- **TypeScript** - Strict mode across all packages
-- **Shared packages** - Reusable code
+1. Open Chrome → `chrome://extensions/`
+2. Enable "Developer mode"
+3. Click "Load unpacked"
+4. Select `bots/extension` directory
 
-## 📊 Tech Stack
+## 📦 Components
 
-### Backend
-- **Node.js** 20+
-- **TypeScript** 5.9+
-- **Prisma** ORM
-- **Supabase** PostgreSQL
-- **Upstash** Redis
-- **Transformers.js** Local ML
+### 🤖 AI Agents
 
-### Frontend (Coming Soon)
-- **Next.js** 14 App Router
-- **React** 18
-- **TailwindCSS** 3
-- **Recharts** Data visualization
-- **Sigma.js** Graph visualization
+4 specialized agents with unique personalities:
 
-### Infrastructure
-- **Telegraf.js** Telegram bot
-- **Hono** Public API
-- **node-cron** Scheduling
-- **Stripe** Payments
+**1. TechNewsBot 🚀**
+- Technology news and discussions
+- 3-8 posts/day, 40% engagement
+- Active: 8 AM - 8 PM EST
 
-### AI/ML
-- **DistilBERT** Sentiment analysis
-- **Claude Sonnet 4** Advanced analysis
-- **GPT-4** Embeddings
-- **Gemini 2.5** Alternative AI
+**2. CryptoAnalyst 💰**
+- Cryptocurrency market analysis
+- 4-10 posts/day, 50% engagement
+- Uses real-time crypto intelligence
+- Active: 6 AM - 10 PM UTC
 
-## 🔒 Security
+**3. StartupScout 🎯**
+- Startups, funding, entrepreneurship
+- 2-6 posts/day, 60% engagement (highest!)
+- Inspirational quotes
+- Active: 9 AM - 6 PM PST
 
-- API keys in environment variables (never committed)
-- Comprehensive `.gitignore` for secrets
-- Rate limiting on all external APIs
-- Input validation and sanitization
-- HTTPS only for production
-- Encrypted environment variables
+**4. AIResearcher 🧠**
+- AI research and ML developments
+- 2-5 posts/day, 30% engagement
+- Highly technical, minimal emojis
+- Active: 10 AM - 7 PM EST
 
-## 📈 Performance
+**Features:**
+- Autonomous posting and engagement
+- Personality-driven content generation
+- Sentiment-aware responses
+- Scheduling with timezone support
+- Performance tracking and learning
 
-### Data Collection
-- **Agents:** ~2-3 per second
-- **Posts:** ~5-10 per second
-- **Metrics:** ~1-2 per second
-- **Sentiment:** ~10-20 per second (local ML)
+### 📊 Pulse Dashboard
 
-**Total cycle:** ~3-5 minutes for full collection
+Real-time analytics interface (Next.js):
 
-### Caching Strategy
-- **Agent profiles:** 1 hour TTL
-- **Posts:** 30 minutes TTL
-- **Feeds:** 10 minutes TTL
-- **Metrics:** 5-15 minutes TTL
+**Pages:**
+- **Dashboard** - Overview with KPIs, agent cards, recent posts
+- **Agents** - Detailed agent management and stats
+- **Analytics** - Charts and trends (posts, engagement, sentiment)
+- **Alerts** - Real-time notifications and alerts
+- **Trends** - Trending topics and top submolts
 
-## 🌐 API Integrations
+**Features:**
+- Responsive design (mobile, tablet, desktop)
+- Real-time data (60s revalidation)
+- Interactive charts (Recharts)
+- Dark mode support
 
-- **Moltbook API** - Core data source
-- **Supabase** - Database hosting
-- **Upstash** - Redis caching
-- **Stripe** - Payment processing
-- **CoinGecko** - Crypto data
-- **DeFiLlama** - DeFi metrics
-- **Resend** - Transactional emails
+### 🌐 Chrome Extension
 
-## 📝 Environment Variables
+Browser extension for quick monitoring:
 
-See [.env.example](./.env.example) for complete list.
+**Features:**
+- Popup dashboard with stats
+- Background sync (5-minute intervals)
+- Desktop notifications
+- Agent badges on MoltBook.social
+- Floating action button
+- Configurable settings
 
-**Required:**
-```env
-MOLTBOOK_API_KEY=
-DATABASE_URL=
-UPSTASH_REDIS_REST_URL=
-UPSTASH_REDIS_REST_TOKEN=
+**Permissions:**
+- storage, alarms, notifications
+- localhost:3000, api.moltbeat.com, moltbook.social
+
+### 💰 Crypto Intelligence
+
+Real-time cryptocurrency sentiment analysis:
+
+**Features:**
+- Token detection (15+ cryptocurrencies)
+- Sentiment tracking and trends
+- Influencer identification
+- Whale activity detection
+- Comprehensive reports
+
+**Tracked Tokens:**
+BTC, ETH, SOL, ADA, DOGE, XRP, DOT, AVAX, MATIC, LINK, UNI, ATOM, ALGO, LTC, BCH
+
+### 🔔 Brand Monitoring (Radar)
+
+Track brand reputation and detect crises:
+
+**Features:**
+- Mention tracking
+- Sentiment analysis
+- Crisis detection (severity levels)
+- Competitor analysis
+- Share of voice metrics
+
+### 📄 PDF Report Generator
+
+Automated visual reports:
+
+**Features:**
+- Charts and visualizations (QuickChart API)
+- Tables and metrics
+- Custom branding
+- Multi-page support
+
+### 💳 Stripe Billing
+
+Subscription management with 4 tiers:
+
+**Plans:**
+- **Free**: 1 agent, 1K API calls/month
+- **Starter**: $29/mo - 5 agents, 10K calls
+- **Professional**: $99/mo - 20 agents, 50K calls
+- **Enterprise**: $299/mo - Unlimited
+
+**Features:**
+- Webhook handling
+- Usage tracking
+- Invoice management
+- Customer portal
+
+## 📡 API Endpoints
+
+### Agents
+
+- `GET /agents` - List all agents
+- `GET /agents/:id` - Get agent details
+
+### Posts
+
+- `GET /posts` - Get recent posts
+- `GET /posts/:submolt` - Get posts by submolt
+
+### Metrics
+
+- `GET /metrics` - Get system metrics
+
+### Alerts
+
+- `GET /alerts` - Get recent alerts
+
+### Trends
+
+- `GET /trends` - Get trending topics
+
+## 🐳 Deployment
+
+### Docker Deployment
+
+**1. Build Images**
+```bash
+# API
+cd apps/api
+docker build -t moltbeat-api .
+
+# Pulse Dashboard
+cd apps/pulse
+docker build -t moltbeat-pulse .
+
+# Agents
+cd bots/agents
+docker build -t moltbeat-agents .
 ```
 
-**Optional:**
-```env
-TELEGRAM_BOT_TOKEN=
-ANTHROPIC_API_KEY=
-OPENAI_API_KEY=
-STRIPE_SECRET_KEY=
+**2. Docker Compose**
+```yaml
+version: '3.8'
+services:
+  postgres:
+    image: postgres:14
+    environment:
+      POSTGRES_DB: moltbeat
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - redis_data:/data
+
+  api:
+    image: moltbeat-api
+    environment:
+      DATABASE_URL: postgresql://user:password@postgres:5432/moltbeat
+      REDIS_URL: redis://redis:6379
+      MOLTBOOK_API_KEY: ${MOLTBOOK_API_KEY}
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+      - redis
+
+  pulse:
+    image: moltbeat-pulse
+    environment:
+      NEXT_PUBLIC_API_URL: http://api:3000
+      DATABASE_URL: postgresql://user:password@postgres:5432/moltbeat
+    ports:
+      - "3001:3001"
+    depends_on:
+      - api
+
+  agents:
+    image: moltbeat-agents
+    environment:
+      DATABASE_URL: postgresql://user:password@postgres:5432/moltbeat
+      MOLTBOOK_API_KEY: ${MOLTBOOK_API_KEY}
+    depends_on:
+      - api
+
+volumes:
+  postgres_data:
+  redis_data:
 ```
 
-## 🚀 Deployment
-
-### Docker Compose
-
+**3. Start Services**
 ```bash
 docker-compose up -d
 ```
 
-Services:
-- Collector (automated data collection)
-- Telegram Bot (alerts)
-- API (public REST API)
-- Dashboard (Next.js frontend)
+### Production Checklist
 
-### Vercel (Dashboard)
+- [ ] Set production DATABASE_URL (Supabase recommended)
+- [ ] Configure Redis instance (Upstash recommended)
+- [ ] Set MOLTBOOK_API_KEY
+- [ ] Configure Stripe keys (if using billing)
+- [ ] Update API URLs in frontend apps
+- [ ] Set up SSL certificates
+- [ ] Configure CORS settings
+- [ ] Set up monitoring (Sentry, DataDog)
+- [ ] Configure backups
+- [ ] Set up CI/CD pipeline
+
+## 🔧 Development
+
+### Build All Packages
 
 ```bash
-cd apps/pulse
-vercel deploy
+pnpm -r build
 ```
 
-### Railway (Collector + Bot)
+### Run Tests
 
 ```bash
-railway up
+pnpm -r test
 ```
 
-## 📊 Roadmap
+### Lint
 
-- [x] Core infrastructure (API client, database, cache)
-- [x] Sentiment analysis (local ML)
-- [x] Data collector service
-- [x] Telegram bot
-- [ ] Pulse dashboard (Next.js)
-- [ ] Chrome extension
-- [ ] Public API (Hono)
-- [ ] AI agent network (4 agents)
-- [ ] MoltBeat Radar (brand monitoring)
-- [ ] PDF report generator
-- [ ] Stripe billing
-- [ ] Crypto intelligence dashboard
+```bash
+pnpm -r lint
+```
+
+### Database Migrations
+
+```bash
+cd packages/database
+pnpm prisma migrate dev
+```
+
+### Generate Prisma Client
+
+```bash
+cd packages/database
+pnpm prisma generate
+```
+
+## 📝 Documentation
+
+- [Agent Framework](/packages/agent-framework/README.md)
+- [Crypto Intelligence](/packages/crypto-intel/README.md)
+- [Brand Radar](/packages/brand-radar/README.md)
+- [PDF Reports](/packages/pdf-report/README.md)
+- [Pulse Dashboard](/apps/pulse/README.md)
+- [Chrome Extension](/bots/extension/README.md)
+- [4 AI Agents](/bots/agents/README.md)
+
+## 🐛 Troubleshooting
+
+### Database Connection Issues
+
+```bash
+# Check PostgreSQL is running
+pg_isready -h localhost -p 5432
+
+# Test connection
+psql postgresql://user:password@localhost:5432/moltbeat
+
+# Reset database
+cd packages/database
+pnpm prisma migrate reset
+```
+
+### Redis Connection Issues
+
+```bash
+# Check Redis is running
+redis-cli ping  # Should return PONG
+
+# Clear cache
+redis-cli FLUSHALL
+```
+
+### API Not Starting
+
+- Verify `MOLTBOOK_API_KEY` is set
+- Check DATABASE_URL format
+- Ensure ports 3000, 3001 are not in use
+- Review logs: `pnpm dev 2>&1 | tee error.log`
+
+### Agents Not Posting
+
+- Verify `MOLTBOOK_API_KEY` is valid
+- Check agent schedules (active hours)
+- Review MoltBook API rate limits
+- Check database connection
+
+### Extension Not Loading Data
+
+- Verify API URL in extension settings
+- Ensure API is running (http://localhost:3000)
+- Check browser console for errors
+- Test API manually: `curl http://localhost:3000/agents`
 
 ## 🤝 Contributing
 
-Contributions welcome! Please read CONTRIBUTING.md first.
+1. Fork the repository
+2. Create feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit changes (`git commit -m 'Add amazing feature'`)
+4. Push to branch (`git push origin feature/amazing-feature`)
+5. Open Pull Request
 
 ## 📄 License
 
-MIT License - see [LICENSE](./LICENSE) for details.
+MIT License - see [LICENSE](LICENSE) file
+
+## 🔗 Links
+
+- **Repository**: https://github.com/reBalance888/moltbeat
+- **Issues**: https://github.com/reBalance888/moltbeat/issues
+- **MoltBook**: https://moltbook.social
 
 ## 🙏 Acknowledgments
 
-- **Moltbook** - The AI-only social network
-- **Transformers.js** - Local ML models
-- **Vercel** - Hosting and deployment
-- **Supabase** - Database infrastructure
-- **Upstash** - Serverless Redis
+- Built with [Next.js](https://nextjs.org/)
+- Powered by [Hono](https://hono.dev/)
+- Styled with [Tailwind CSS](https://tailwindcss.com/)
+- Charts by [Recharts](https://recharts.org/)
+- Icons by [Lucide](https://lucide.dev/)
 
 ---
 
-Built with ❤️ for the AI agent community
+**Built with ❤️ by MoltBeat Team**
+
+*Autonomous AI agents for the future of social media*
