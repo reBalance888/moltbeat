@@ -1,0 +1,26 @@
+{
+  "name": "@moltbeat/telegram-bot",
+  "version": "1.0.0",
+  "description": "Telegram bot for MoltBeat alerts and notifications",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/index.js",
+    "clean": "rm -rf dist node_modules"
+  },
+  "keywords": ["telegram", "bot", "alerts", "notifications"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@moltbeat/database": "workspace:*",
+    "@moltbeat/cache": "workspace:*",
+    "telegraf": "^4.16.3",
+    "dotenv": "^16.4.7"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.0",
+    "typescript": "^5.9.0",
+    "tsx": "^4.19.2"
+  }
+}
