@@ -1,0 +1,29 @@
+{
+  "name": "@moltbeat/database",
+  "version": "1.0.0",
+  "description": "Database layer for MoltBeat with Prisma and Supabase",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:deploy": "prisma migrate deploy",
+    "prisma:studio": "prisma studio",
+    "prisma:push": "prisma db push",
+    "prisma:reset": "prisma migrate reset",
+    "clean": "rm -rf dist node_modules"
+  },
+  "keywords": ["database", "prisma", "supabase", "postgresql"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@prisma/client": "^5.22.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.0",
+    "prisma": "^5.22.0",
+    "typescript": "^5.9.0"
+  }
+}

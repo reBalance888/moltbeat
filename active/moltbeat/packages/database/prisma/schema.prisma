@@ -1,0 +1,305 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============ MOLTBOOK CACHE ============
+
+model Agent {
+  id              String   @id
+  name            String   @unique
+  description     String?
+  karma           Int      @default(0)
+  followerCount   Int      @default(0) @map("follower_count")
+  followingCount  Int      @default(0) @map("following_count")
+  isClaimed       Boolean  @default(false) @map("is_claimed")
+  isActive        Boolean  @default(true) @map("is_active")
+  avatarUrl       String?  @map("avatar_url")
+  metadata        Json?
+
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+  lastSyncedAt    DateTime @default(now()) @map("last_synced_at")
+
+  posts           Post[]
+  comments        Comment[]
+  metrics         AgentMetrics[]
+  brandMonitors   BrandMonitor[]
+
+  @@index([name])
+  @@index([karma])
+  @@index([lastSyncedAt])
+  @@map("agents")
+}
+
+model Post {
+  id              String   @id
+  submolt         String
+  title           String
+  content         String?  @db.Text
+  url             String?
+  authorId        String   @map("author_id")
+  author          Agent    @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  upvotes         Int      @default(0)
+  downvotes       Int      @default(0)
+  commentCount    Int      @default(0) @map("comment_count")
+  isPinned        Boolean  @default(false) @map("is_pinned")
+
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+  lastSyncedAt    DateTime @default(now()) @map("last_synced_at")
+
+  comments        Comment[]
+  metrics         ContentMetrics[]
+  sentimentAnalysis SentimentAnalysis[]
+
+  @@index([submolt])
+  @@index([authorId])
+  @@index([createdAt])
+  @@index([upvotes])
+  @@map("posts")
+}
+
+model Comment {
+  id              String   @id
+  postId          String   @map("post_id")
+  post            Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  content         String   @db.Text
+  authorId        String   @map("author_id")
+  author          Agent    @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  parentId        String?  @map("parent_id")
+
+  upvotes         Int      @default(0)
+  downvotes       Int      @default(0)
+
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  sentimentAnalysis SentimentAnalysis[]
+
+  @@index([postId])
+  @@index([authorId])
+  @@index([createdAt])
+  @@map("comments")
+}
+
+// ============ ANALYTICS ============
+
+model AgentMetrics {
+  id              String   @id @default(cuid())
+  agentId         String   @map("agent_id")
+  agent           Agent    @relation(fields: [agentId], references: [id], onDelete: Cascade)
+
+  timestamp       DateTime @default(now())
+  karma           Int
+  followers       Int
+  following       Int
+  postsCount      Int      @map("posts_count")
+  commentsCount   Int      @map("comments_count")
+  avgUpvotes      Float    @map("avg_upvotes")
+  avgEngagement   Float    @map("avg_engagement")
+  sentimentScore  Float?   @map("sentiment_score")
+
+  @@unique([agentId, timestamp])
+  @@index([agentId])
+  @@index([timestamp])
+  @@map("agent_metrics")
+}
+
+model ContentMetrics {
+  id              String   @id @default(cuid())
+  postId          String   @map("post_id")
+  post            Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  timestamp       DateTime @default(now())
+  upvotes         Int
+  downvotes       Int
+  comments        Int
+  engagement      Float
+  viralityScore   Float    @map("virality_score")
+
+  @@unique([postId, timestamp])
+  @@index([postId])
+  @@index([timestamp])
+  @@map("content_metrics")
+}
+
+model TrendingTopic {
+  id              String   @id @default(cuid())
+  topic           String
+  submolt         String?
+  postCount       Int      @map("post_count")
+  engagementScore Float    @map("engagement_score")
+  growthRate      Float    @map("growth_rate")
+
+  startTime       DateTime @map("start_time")
+  endTime         DateTime @map("end_time")
+  createdAt       DateTime @default(now()) @map("created_at")
+
+  @@index([topic])
+  @@index([submolt])
+  @@index([startTime])
+  @@index([engagementScore])
+  @@map("trending_topics")
+}
+
+model SentimentAnalysis {
+  id              String   @id @default(cuid())
+  contentType     String   @map("content_type") // "post" or "comment"
+  postId          String?  @map("post_id")
+  commentId       String?  @map("comment_id")
+
+  post            Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
+  comment         Comment? @relation(fields: [commentId], references: [id], onDelete: Cascade)
+
+  sentiment       String   // "positive", "negative", "neutral"
+  score           Float    // 0.0 to 1.0
+  confidence      Float    // 0.0 to 1.0
+  keywords        String[]
+
+  analyzedAt      DateTime @default(now()) @map("analyzed_at")
+
+  @@index([contentType, postId])
+  @@index([contentType, commentId])
+  @@index([sentiment])
+  @@index([analyzedAt])
+  @@map("sentiment_analysis")
+}
+
+// ============ ALERTS ============
+
+model Alert {
+  id              String   @id @default(cuid())
+  type            String   // "spike", "anomaly", "trend", "sentiment_shift"
+  severity        String   // "low", "medium", "high", "critical"
+  title           String
+  description     String   @db.Text
+
+  agentId         String?  @map("agent_id")
+  submolt         String?
+  postId          String?  @map("post_id")
+
+  metadata        Json?
+  isRead          Boolean  @default(false) @map("is_read")
+  isResolved      Boolean  @default(false) @map("is_resolved")
+
+  createdAt       DateTime @default(now()) @map("created_at")
+  resolvedAt      DateTime? @map("resolved_at")
+
+  @@index([type])
+  @@index([severity])
+  @@index([isRead])
+  @@index([createdAt])
+  @@map("alerts")
+}
+
+// ============ B2B / USERS ============
+
+model User {
+  id              String   @id @default(cuid())
+  email           String   @unique
+  name            String?
+  company         String?
+
+  stripeCustomerId String? @unique @map("stripe_customer_id")
+
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  subscriptions   Subscription[]
+  brandMonitors   BrandMonitor[]
+
+  @@index([email])
+  @@map("users")
+}
+
+model Subscription {
+  id              String   @id @default(cuid())
+  userId          String   @map("user_id")
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  plan            String   // "free", "pro", "enterprise"
+  status          String   // "active", "cancelled", "past_due"
+
+  stripeSubscriptionId String? @unique @map("stripe_subscription_id")
+  stripePriceId   String?  @map("stripe_price_id")
+
+  currentPeriodStart DateTime @map("current_period_start")
+  currentPeriodEnd   DateTime @map("current_period_end")
+
+  createdAt       DateTime @default(now()) @map("created_at")
+  cancelledAt     DateTime? @map("cancelled_at")
+
+  @@index([userId])
+  @@index([status])
+  @@map("subscriptions")
+}
+
+model BrandMonitor {
+  id              String   @id @default(cuid())
+  userId          String   @map("user_id")
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  agentId         String   @map("agent_id")
+  agent           Agent    @relation(fields: [agentId], references: [id], onDelete: Cascade)
+
+  keywords        String[]
+  submolts        String[]
+
+  alertsEnabled   Boolean  @default(true) @map("alerts_enabled")
+  alertThreshold  Float    @default(0.5) @map("alert_threshold")
+
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  @@index([userId])
+  @@index([agentId])
+  @@map("brand_monitors")
+}
+
+// ============ CRYPTO INTELLIGENCE ============
+
+model TokenMetrics {
+  id              String   @id @default(cuid())
+  symbol          String   // "MOLT", "ETH", etc.
+  name            String
+
+  price           Float
+  volume24h       Float    @map("volume_24h")
+  marketCap       Float    @map("market_cap")
+  change24h       Float    @map("change_24h")
+
+  socialMentions  Int      @map("social_mentions")
+  sentimentScore  Float    @map("sentiment_score")
+
+  timestamp       DateTime @default(now())
+
+  @@index([symbol])
+  @@index([timestamp])
+  @@map("token_metrics")
+}
+
+model MoltbookEconomyIndex {
+  id              String   @id @default(cuid())
+
+  totalAgents     Int      @map("total_agents")
+  activeAgents    Int      @map("active_agents")
+  totalPosts      Int      @map("total_posts")
+  totalComments   Int      @map("total_comments")
+
+  avgKarma        Float    @map("avg_karma")
+  avgEngagement   Float    @map("avg_engagement")
+  topSubmolts     String[]  @map("top_submolts")
+
+  economyScore    Float    @map("economy_score") // 0-100
+
+  timestamp       DateTime @default(now())
+
+  @@index([timestamp])
+  @@map("moltbook_economy_index")
+}
