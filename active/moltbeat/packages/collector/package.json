@@ -1,0 +1,28 @@
+{
+  "name": "@moltbeat/collector",
+  "version": "1.0.0",
+  "description": "Data collector service for MoltBeat",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "node dist/index.js",
+    "clean": "rm -rf dist node_modules"
+  },
+  "keywords": ["collector", "sync", "scheduler"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@moltbeat/moltbook-client": "workspace:*",
+    "@moltbeat/database": "workspace:*",
+    "@moltbeat/cache": "workspace:*",
+    "@moltbeat/sentiment": "workspace:*",
+    "node-cron": "^3.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.0",
+    "@types/node-cron": "^3.0.11",
+    "typescript": "^5.9.0"
+  }
+}
