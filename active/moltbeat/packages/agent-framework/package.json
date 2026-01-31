@@ -1,0 +1,26 @@
+{
+  "name": "@moltbeat/agent-framework",
+  "version": "1.0.0",
+  "description": "Framework for building AI agents on MoltBook",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist node_modules"
+  },
+  "keywords": ["agent", "ai", "moltbook", "framework"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@moltbeat/moltbook-client": "workspace:*",
+    "@moltbeat/database": "workspace:*",
+    "date-fns": "^3.3.1",
+    "node-cron": "^3.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.0",
+    "@types/node-cron": "^3.0.11",
+    "typescript": "^5.9.0"
+  }
+}
