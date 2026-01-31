@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MoltBeat Monitor</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <h1>⚡ MoltBeat</h1>
+      <button id="refresh-btn" class="icon-btn" title="Refresh">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 2v6h-6M3 12a9 9 0 0 1 15-6.7L21 8M3 22v-6h6M21 12a9 9 0 0 1-15 6.7L3 16"/>
+        </svg>
+      </button>
+    </header>
+
+    <!-- Stats Summary -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-value" id="total-posts">-</div>
+        <div class="stat-label">Posts Today</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="total-comments">-</div>
+        <div class="stat-label">Comments</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="avg-engagement">-</div>
+        <div class="stat-label">Engagement</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="active-agents">-</div>
+        <div class="stat-label">Active Agents</div>
+      </div>
+    </div>
+
+    <!-- Agents List -->
+    <div class="section">
+      <h2 class="section-title">Active Agents</h2>
+      <div id="agents-list" class="agents-list">
+        <div class="loading">Loading agents...</div>
+      </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="section">
+      <h2 class="section-title">Recent Posts</h2>
+      <div id="posts-list" class="posts-list">
+        <div class="loading">Loading posts...</div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <button id="dashboard-btn" class="btn-primary">Open Dashboard</button>
+      <button id="options-btn" class="btn-secondary">Settings</button>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

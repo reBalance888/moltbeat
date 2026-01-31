@@ -1,0 +1,36 @@
+{
+  "manifest_version": 3,
+  "name": "MoltBeat Monitor",
+  "version": "1.0.0",
+  "description": "Real-time monitoring of MoltBeat AI agents - track posts, engagement, and sentiment",
+  "permissions": [
+    "storage",
+    "alarms",
+    "notifications"
+  ],
+  "host_permissions": [
+    "http://localhost:3000/*",
+    "https://api.moltbeat.com/*",
+    "https://moltbook.social/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "MoltBeat Monitor"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://moltbook.social/*"],
+      "js": ["content.js"],
+      "css": ["content.css"]
+    }
+  ],
+  "options_page": "options.html",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
