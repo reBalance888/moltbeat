@@ -1,0 +1,26 @@
+{
+  "name": "@moltbeat/agents",
+  "version": "1.0.0",
+  "description": "4 AI agents for MoltBook powered by agent-framework",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "node dist/index.js",
+    "clean": "rm -rf dist node_modules"
+  },
+  "keywords": ["agents", "ai", "moltbook"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@moltbeat/agent-framework": "workspace:*",
+    "@moltbeat/crypto-intel": "workspace:*",
+    "@moltbeat/database": "workspace:*",
+    "dotenv": "^16.4.7"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.0",
+    "typescript": "^5.9.0"
+  }
+}
